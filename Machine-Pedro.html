@@ -5,68 +5,234 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPTecher's Machine Real-Time</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e1e2f 0%, #4a148c 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1,
+        h3 {
+            margin-bottom: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #00f2fe;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 30px 0;
+        }
+
+        .calc-inputs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #00f2fe;
+            color: #1e1e2f;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        button:hover {
+            background: #4facfe;
+            transform: translateY(-3px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #div_resultado_operacao {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <center>
+
+    <div class="container">
         <h1>Conversor Simultâneo</h1>
 
-        <label>Decimal:</label><br>
-        <input id="ipt_dec" type="text" oninput="converter(10)" placeholder="Ex: 10"><br><br>
+        <div class="input-group">
+            <label>Decimal</label>
+            <input id="ipt_dec" type="text" oninput="converter(10)" placeholder="Ex: 10">
+        </div>
 
-        <label>Binário:</label><br>
-        <input id="ipt_bin" type="text" oninput="converter(2)" placeholder="Ex: 1010"><br><br>
+        <div class="input-group">
+            <label>Binário</label>
+            <input id="ipt_bin" type="text" oninput="converter(2)" placeholder="Ex: 1010">
+        </div>
 
-        <label>Octal:</label><br>
-        <input id="ipt_oct" type="text" oninput="converter(8)" placeholder="Ex: 12"><br><br>
+        <div class="input-group">
+            <label>Octal</label>
+            <input id="ipt_oct" type="text" oninput="converter(8)" placeholder="Ex: 12">
+        </div>
 
-        <label>Hexadecimal:</label><br>
-        <input id="ipt_hex" type="text" oninput="converter(16)" placeholder="Ex: A"><br><br>
+        <div class="input-group">
+            <label>Hexadecimal</label>
+            <input id="ipt_hex" type="text" oninput="converter(16)" placeholder="Ex: A">
+        </div>
 
         <hr>
 
         <h3>Calculadora entre Bases</h3>
-        <input id="v1" type="text" placeholder="Valor 1">
-        
-        <select id="base_calc">
-            <option value="2">Binário</option>
-            <option value="8">Octal</option>
-            <option value="10" selected>Decimal</option>
-            <option value="16">Hexadecimal</option>
-        </select>
-        
-        <input id="v2" type="text" placeholder="Valor 2">
-        <br><br>
-        
-        <button onclick="operar('+')">+</button>
-        <button onclick="operar('-')">-</button>
-        <button onclick="operar('*')">*</button>
-        <button onclick="operar('/')">/</button>
 
-        <div id="div_resultado_operacao"></div>
-    </center>
+        <div class="calc-inputs">
+            <input id="v1" type="text" placeholder="Valor 1">
+            <select id="base_calc">
+                <option value="2">BIN</option>
+                <option value="8">OCT</option>
+                <option value="10" selected>DEC</option>
+                <option value="16">HEX</option>
+            </select>
+            <input id="v2" type="text" placeholder="Valor 2">
+        </div>
+
+        <div class="buttons-grid">
+            <button onclick="operar('+')">+</button>
+            <button onclick="operar('-')">-</button>
+            <button onclick="operar('*')">×</button>
+            <button onclick="operar('/')">÷</button>
+        </div>
+
+        <div id="div_resultado_operacao">Resultados aparecerão aqui...</div>
+    </div>
 
     <script>
         function converter(base) {
-            let valor;
-            
-            if (base === 10) valor = parseInt(ipt_dec.value, 10);
-            if (base === 2)  valor = parseInt(ipt_bin.value, 2);
-            if (base === 8)  valor = parseInt(ipt_oct.value, 8);
-            if (base === 16) valor = parseInt(ipt_hex.value, 16);
+            let valorInput;
 
-            if (isNaN(valor)) {
-                if (base !== 10) ipt_dec.value = "";
-                if (base !== 2)  ipt_bin.value = "";
-                if (base !== 8)  ipt_oct.value = "";
-                if (base !== 16) ipt_hex.value = "";
+            if (base === 10) { 
+                valorInput = ipt_dec.value; 
+            }
+            if (base === 2) {
+                valorInput = ipt_bin.value; 
+            }
+            if (base === 8) { 
+                valorInput = ipt_oct.value; 
+            }
+            if (base === 16) {
+                valorInput = ipt_hex.value; 
+            }
+
+            let valor = parseInt(valorInput, base);
+
+            if (isNaN(valor) || valorInput === "") {
+                if (base !== 10) {
+                    ipt_dec.value = "";
+                }
+                if (base !== 2) {
+                    ipt_bin.value = "";
+                }
+                if (base !== 8) {
+                    ipt_oct.value = "";
+                }
+                if (base !== 16) {
+                    ipt_hex.value = "";
+                }
                 return;
             }
 
-            if (base !== 10) ipt_dec.value = valor.toString(10);
-            if (base !== 2)  ipt_bin.value = valor.toString(2);
-            if (base !== 8)  ipt_oct.value = valor.toString(8);
-            if (base !== 16) ipt_hex.value = valor.toString(16).toUpperCase();
+            if (base !== 10) {
+                ipt_dec.value = valor.toString(10);
+            }
+            if (base !== 2) {
+                ipt_bin.value = valor.toString(2);
+            }
+            if (base !== 8) {
+                ipt_oct.value = valor.toString(8);
+            }
+            if (base !== 16) {
+                ipt_hex.value = valor.toString(16).toUpperCase();
+            }
         }
 
         function operar(sinal) {
@@ -80,13 +246,21 @@
                 return;
             }
 
-            if (sinal == '+') conta = n1 + n2;
-            if (sinal == '-') conta = n1 - n2;
-            if (sinal == '*') conta = n1 * n2;
-            if (sinal == '/') conta = n1 / n2;
+            if (sinal == '+') {
+                conta = n1 + n2;
+            }
+            if (sinal == '-') {
+                conta = n1 - n2;
+            }
+            if (sinal == '*') {
+                conta = n1 * n2;
+            }
+            if (sinal == '/') {
+                conta = n1 / n2;
+            }
 
             div_resultado_operacao.innerHTML = `
-                <h4>Resultados:</h4>
+                <strong style="color: #00f2fe">Resultados:</strong><br>
                 Decimal: ${conta}<br>
                 Binário: ${conta.toString(2)}<br>
                 Octal: ${conta.toString(8)}<br>
