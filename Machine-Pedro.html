@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPTecher's Machine Real-Time</title>
+</head>
+
+<body>
+    <center>
+        <h1>Conversor Simultâneo</h1>
+
+        <label>Decimal:</label><br>
+        <input id="ipt_dec" type="text" oninput="converter(10)" placeholder="Ex: 10"><br><br>
+
+        <label>Binário:</label><br>
+        <input id="ipt_bin" type="text" oninput="converter(2)" placeholder="Ex: 1010"><br><br>
+
+        <label>Octal:</label><br>
+        <input id="ipt_oct" type="text" oninput="converter(8)" placeholder="Ex: 12"><br><br>
+
+        <label>Hexadecimal:</label><br>
+        <input id="ipt_hex" type="text" oninput="converter(16)" placeholder="Ex: A"><br><br>
+
+        <hr>
+
+        <h3>Calculadora entre Bases</h3>
+        <input id="v1" type="text" placeholder="Valor 1">
+        
+        <select id="base_calc">
+            <option value="2">Binário</option>
+            <option value="8">Octal</option>
+            <option value="10" selected>Decimal</option>
+            <option value="16">Hexadecimal</option>
+        </select>
+        
+        <input id="v2" type="text" placeholder="Valor 2">
+        <br><br>
+        
+        <button onclick="operar('+')">+</button>
+        <button onclick="operar('-')">-</button>
+        <button onclick="operar('*')">*</button>
+        <button onclick="operar('/')">/</button>
+
+        <div id="div_resultado_operacao"></div>
+    </center>
+
+    <script>
+        function converter(base) {
+            let valor;
+            
+            if (base === 10) valor = parseInt(ipt_dec.value, 10);
+            if (base === 2)  valor = parseInt(ipt_bin.value, 2);
+            if (base === 8)  valor = parseInt(ipt_oct.value, 8);
+            if (base === 16) valor = parseInt(ipt_hex.value, 16);
+
+            if (isNaN(valor)) {
+                if (base !== 10) ipt_dec.value = "";
+                if (base !== 2)  ipt_bin.value = "";
+                if (base !== 8)  ipt_oct.value = "";
+                if (base !== 16) ipt_hex.value = "";
+                return;
+            }
+
+            if (base !== 10) ipt_dec.value = valor.toString(10);
+            if (base !== 2)  ipt_bin.value = valor.toString(2);
+            if (base !== 8)  ipt_oct.value = valor.toString(8);
+            if (base !== 16) ipt_hex.value = valor.toString(16).toUpperCase();
+        }
+
+        function operar(sinal) {
+            let base = Number(base_calc.value);
+            let n1 = parseInt(v1.value, base);
+            let n2 = parseInt(v2.value, base);
+            let conta;
+
+            if (isNaN(n1) || isNaN(n2)) {
+                div_resultado_operacao.innerHTML = "Verifique os valores.";
+                return;
+            }
+
+            if (sinal == '+') conta = n1 + n2;
+            if (sinal == '-') conta = n1 - n2;
+            if (sinal == '*') conta = n1 * n2;
+            if (sinal == '/') conta = n1 / n2;
+
+            div_resultado_operacao.innerHTML = `
+                <h4>Resultados:</h4>
+                Decimal: ${conta}<br>
+                Binário: ${conta.toString(2)}<br>
+                Octal: ${conta.toString(8)}<br>
+                Hexadecimal: ${conta.toString(16).toUpperCase()}
+            `;
+        }
+    </script>
+</body>
+
+</html>
